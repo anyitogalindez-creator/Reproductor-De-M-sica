@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Música Profesional</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="main-player-container" class="player-container">
+        
+        <aside id="sidebar-navigation" class="sidebar-menu">
+            <div id="brand-logo" class="logo">
+                <span class="material-symbols-outlined">album</span>
+                <h2>MiMúsica</h2>
+            </div>
+            <nav id="menu-navigation-links" class="menu-links">
+                <a href="#" id="nav-link-home" class="nav-item active"><span class="material-symbols-outlined">home</span> Inicio</a>
+                <a href="#" id="nav-link-search" class="nav-item"><span class="material-symbols-outlined">search</span> Buscar</a>
+                <a href="#" id="nav-link-library" class="nav-item"><span class="material-symbols-outlined">library_music</span> Tu Biblioteca</a>
+            </nav>
+        </aside>
+
+        <main id="main-content-area" class="main-content">
+            
+            <section id="view-home" class="music-view active-view">
+                <div id="current-song-card" class="song-card">
+                    <div id="song-cover-container" class="cover-art">
+                        <img id="song-cover" class="cover-image" src="https://picsum.photos/280?random=11" alt="Portada del álbum">
+                    </div>
+                    <div id="song-text-info" class="song-info">
+                        <h1 id="song-title" class="song-title">Cargando...</h1>
+                        <p id="song-artist" class="song-artist">Artista</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-search" class="music-view">
+                <div id="search-block-container" class="search-container">
+                    <h2>Buscar música</h2>
+                    <input type="text" id="search-input-field" class="search-input" placeholder="¿Qué quieres escuchar hoy?">
+                </div>
+            </section>
+
+            <section id="view-library" class="music-view">
+                <div id="library-block-container" class="library-container">
+                    <h2>Tu Biblioteca</h2>
+                    <p id="library-empty-msg" class="empty-message">Aún no tienes listas de reproducción creadas.</p>
+                </div>
+            </section>
+
+            <div id="audio-controls-panel" class="player-controls-container">
+                
+                <div id="progress-timeline" class="progress-container">
+                    <span id="track-current-time" class="current-time">0:00</span>
+                    <input type="range" id="track-progress-bar" class="progress-bar" min="0" max="100" value="0">
+                    <span id="track-total-time" class="total-time">0:00</span>
+                </div>
+
+                <div id="media-action-buttons" class="control-buttons">
+                    <button class="btn-icon btn-shuffle" id="btn-shuffle" title="Aleatorio">
+                        <span class="material-symbols-outlined">shuffle</span>
+                    </button>
+                    <button class="btn-icon btn-prev" id="btn-prev" title="Anterior">
+                        <span class="material-symbols-outlined">skip_previous</span>
+                    </button>
+                    <button class="btn-icon btn-main btn-play-pause" id="btn-play-pause" title="Reproducir">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button class="btn-icon btn-next" id="btn-next" title="Siguiente">
+                        <span class="material-symbols-outlined">skip_next</span>
+                    </button>
+                    <button class="btn-icon btn-repeat" id="btn-repeat" title="Repetir">
+                        <span class="material-symbols-outlined">repeat</span>
+                    </button>
+                </div>
+
+                <div id="volume-adjustment-panel" class="volume-container">
+                    <span id="volume-icon-status" class="material-symbols-outlined">volume_up</span>
+                    <input type="range" id="volume-slider-bar" class="volume-slider" min="0" max="100" value="70">
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="Reproductor.JS"></script>
+</body>
+</html>

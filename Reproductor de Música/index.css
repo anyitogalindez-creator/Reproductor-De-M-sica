@@ -1,0 +1,334 @@
+/* ==========================================================================
+   RESET GENERAL Y VARIABLES DE DISEÑO (Optimizado para Alto Contraste)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --bg-main: #ffeef2; /* Color de respaldo pastel */
+    --bg-sidebar: rgba(40, 30, 35, 0.85); /* Fondo oscuro translúcido para el menú lateral */
+    --bg-card: rgba(255, 255, 255, 0.95); /* Tarjeta blanca limpia */
+    --text-main: #ffffff; /* Texto principal en blanco para que resalte en el fondo */
+    --text-dark: #2d1e23; /* Texto oscuro exclusivo para dentro de la tarjeta blanca */
+    --text-muted: #f3c6d1; /* Texto secundario claro para el menú lateral */
+    --accent-color: #ff758f; /* Rosa principal de los botones */
+    --accent-hover: #ff4d6d; /* Rosa intenso para hovers */
+}
+
+ /* ==========================================================================
+   CÓDIGO CORREGIDO: FONDO DIFUMINADO PARA ELIMINAR BORDES VACÍOS
+   ========================================================================== */
+
+body {
+    background-color: #2d1e23; /* Fondo oscuro de respaldo */
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* CAPA 1 (Fondo de los lados): Estira la imagen por completo y la borra para rellenar los huecos */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('descarga (1).jpg');
+    background-size: cover; /* Esta sí se estira para tapar todo el fondo */
+    background-position: center;
+    filter: blur(40px) brightness(0.6); /* El truco: mucho difuminado y un poco más oscura */
+    z-index: -3; /* Se va al fondo definitivo */
+}
+
+/* CAPA 2 (Centro perfecto): Muestra tu imagen original completa en el medio sin deformarse */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:url(Marilingjpg.jpg);
+    background-size: contain; /* Conserva sus proporciones originales */
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2; /* Queda flotando justo encima del fondo borroso */
+}
+
+/* CAPA 3 (Filtro de Contraste): Una sombra suave para que el reproductor resalte */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: radial-gradient(circle, rgba(45, 30, 35, 0.2) 30%, rgba(20, 10, 15, 0.7) 100%);
+    z-index: 1;
+}
+
+/* ==========================================================================
+   ARQUITECTURA DE CONTENEDORES (LAYOUT)
+   ========================================================================== */
+.player-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.sidebar-menu {
+    width: 240px;
+    background-color: var(--bg-sidebar);
+    backdrop-filter: blur(15px); /* Desenfoque de vidrio elegante */
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-right: 1px solid rgba(255, 117, 143, 0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+}
+
+.logo h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.menu-links a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.menu-links a:hover, 
+.menu-links a.active {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px rgba(255, 117, 143, 0.5);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    /* CAPA CLAVE: Coloca un filtro oscuro suave sobre la imagen central para leer los textos */
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(45, 30, 35, 0.65));
+}
+
+/* ==========================================================================
+   SISTEMA DE NAVEGACIÓN DINÁMICO (VISTAS)
+   ========================================================================== */
+.music-view {
+    display: none;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.music-view.active-view {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   COMPONENTES DE LAS SECCIONES (Inicio, Buscar, Biblioteca)
+   ========================================================================== */
+.song-card {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cover-art {
+    width: 280px;
+    height: 280px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    margin: 0 auto 24px auto;
+    border: 2px solid rgba(255, 117, 143, 0.4);
+    overflow: hidden;
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.song-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff; /* Texto de la canción en blanco puro */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para legibilidad total */
+}
+
+.song-artist {
+    color: #ffe0e6; /* Rosa pastel muy claro */
+    font-size: 16px;
+    font-weight: 500;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.search-container h2, .library-container h2 {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: 2px solid var(--accent-color);
+    background-color: var(--bg-card);
+    color: var(--text-dark);
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.empty-message {
+    color: #ffe0e6;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   CONTROLES Y BARRAS DESLIZANTES (ALTO CONTRASTE)
+   ========================================================================== */
+.player-controls-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(45, 30, 35, 0.75); /* Panel de control oscuro para proteger los botones */
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 117, 143, 0.2);
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 14px;
+    color: #ffe0e6; /* Tiempos legibles */
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.progress-bar, .volume-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* INTERACTIVIDAD DE LOS BOTONES MULTIMEDIA */
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #ffffff; /* Cambiados a blanco para que se distingan al 100% */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-icon .material-symbols-outlined {
+    font-size: 28px; /* Iconos un poco más grandes */
+}
+
+.btn-icon:hover {
+    color: var(--accent-color);
+    transform: scale(1.15);
+}
+
+.btn-main {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 50%;
+    box-shadow: 0 6px 20px rgba(255, 117, 143, 0.5);
+}
+
+.btn-main:hover {
+    background-color: var(--accent-hover);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.btn-main .material-symbols-outlined {
+    font-size: 36px;
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 180px;
+    color: #ffe0e6;
+}
+
+.volume-slider {
+    max-width: 120px;
+}
